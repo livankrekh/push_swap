@@ -103,3 +103,9 @@ void	reverse(t_stack **a, char *flag, int i)
 	ft_putstr(flag);
 	ft_putstr("\n");
 }
+
+void	rrr(t_stack **a, t_stack **b)
+{
+	reverse(a, "", 0);
+	reverse(b, "rrr", 0);
+}

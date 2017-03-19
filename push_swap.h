@@ -24,6 +24,7 @@
 # define RR rr(&a, &b);
 # define RRA reverse(&a, "rra", 0);
 # define RRB reverse(&b, "rrb", 0);
+# define RRR reverse(&a, &b);
 # include <stdlib.h>
 # include <unistd.h>
 # include "libft/libft.h"
