@@ -40,7 +40,6 @@ int		valid(char *n)
 
 int		main(int argc, char **argv)
 {
-	int			*tmp;
 	int			i;
 	t_stack		*a;
 	t_stack		*b;
@@ -48,15 +47,9 @@ int		main(int argc, char **argv)
 	i = 0;
 	a = (t_stack*)malloc(sizeof(t_stack));
 	b = (t_stack*)malloc(sizeof(t_stack));
-	tmp = (int*)malloc(sizeof(int) * (argc - 1));
-	while (i < argc - 1)
-	{
-		if (valid(argv[i + 1]) == 0)
-			return (0);
-		tmp[i] = ft_atoi(argv[i + 1]);
-		i++;
-	}
-	stack_input(a, b, tmp, i);
-	free(tmp);
+	if (stack_input(a, argv, argc) == 0)
+		return (-1);
+	RRA;
+	printf("CURRENT = %d\n", a->data);
 	return (0);
 }
