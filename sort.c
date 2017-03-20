@@ -5,27 +5,52 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: liabanzh <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/17 19:01:01 by liabanzh          #+#    #+#             */
-/*   Updated: 2017/03/17 19:01:02 by liabanzh         ###   ########.fr       */
+/*   Created: 2017/03/20 14:35:37 by liabanzh          #+#    #+#             */
+/*   Updated: 2017/03/20 14:35:38 by liabanzh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int 	stack_input(t_stack *a, char **argv, int argc)
+void	print_stack(t_stack *a)
 {
-	int 		i;
-
-	i = 1;
-	while (i < argc)
+	while (a != NULL)
 	{
-		if (valid(argv[i]) == 0)
-			return (0);
-		a->data = ft_atoi(argv[i]);
-		a->next = (t_stack*)malloc(sizeof(t_stack));
+		printf("%d\n", a->data);
+		a = a->next;
+	}
+	printf("-\n");
+	printf("a\n");
+}
+
+int		count(t_stack *a)
+{
+	int		i;
+
+	i = 0;
+	while (a != NULL)
+	{
 		a = a->next;
 		i++;
 	}
-	a->next = NULL;
-	return (1);
+	return (i);
+}
+
+void	sorting(t_stack *a, t_stack *b, int middle)
+{
+	int		max;
+
+	max = min_a(a);
+	while (a->next != NULL)
+	{
+		while (max != a->data)
+			RA;
+		PB;
+		max = min_a(a);
+	}
+	PB;
+	while (b->next != NULL)
+		PA;
+	PA;
+	print_stack(a);
 }

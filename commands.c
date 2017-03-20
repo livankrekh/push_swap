@@ -57,7 +57,7 @@ void	r(t_stack **a, char *flag)
 
 	curr = (*a)->next;
 	tmp = (*a)->data;
-	while (curr->next != NULL)
+	while (curr != NULL)
 	{
 		tmp2 = curr->data;
 		curr->data = tmp;
@@ -81,20 +81,20 @@ void	reverse(t_stack **a, char *flag, int i)
 	t_stack	*ptr;
 
 	ptr = *a;
-	while (ptr->next != NULL)
+	while (ptr != NULL)
 	{
 		ptr = ptr->next;
 		i++;
 	}
 	arr = (int*)malloc(sizeof(int) * i);
 	ptr = *a;
-	while (ptr->next != NULL)
+	while (ptr != NULL)
 	{
 		arr[--i] = ptr->data;
 		ptr = ptr->next;
 	}
 	ptr = *a;
-	while (ptr->next != NULL)
+	while (ptr != NULL)
 	{
 		ptr->data = arr[i++];
 		ptr = ptr->next;

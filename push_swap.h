@@ -36,12 +36,16 @@ typedef	struct 	s_stack
 	void		*next;
 }				t_stack;
 
-int 	stack_input(t_stack *a, char **argv, int argc);
-int		valid(char *n);
-void	s(t_stack *a, char *flag);
-void	ss(t_stack *a, t_stack *b);
-void	p(t_stack **target, t_stack **from, char *flag);
-void	r(t_stack **a, char *flag);
-void	reverse(t_stack **a, char *flag, int i);
+int 			stack_input(t_stack *a, char **argv, int argc);
+void			s(t_stack *a, char *flag);
+void			ss(t_stack *a, t_stack *b);
+void			p(t_stack **target, t_stack **from, char *flag);
+void			r(t_stack **a, char *flag);
+void			reverse(t_stack **a, char *flag, int i);
+int				get_middle(t_stack *a);
+void			sorting(t_stack *a, t_stack *b, int middle);
+int				max_a(t_stack *a);
+int				min_a(t_stack *a);
+void			print_stack(t_stack *a);
 
 #endif
