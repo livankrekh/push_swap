@@ -26,7 +26,7 @@ int		count_balance(t_stack *a, int min, int middle, char flag)
 		}
 		else
 		{
-			if (a->data < middle && a->data > min)
+			if (a->data < middle && a->data >= min)
 				res++;
 		}
 		a = a->next;
@@ -43,7 +43,7 @@ int		presort(t_stack *a, int balance, int middle, int size)
 	index = 0;
 	while (a != NULL)
 	{
-		if (a->data < middle)
+		if (a->data > middle)
 		{
 			if (index >= size / 2)
 				res++;
@@ -66,14 +66,36 @@ void	sorting(t_stack **a, t_stack **b, int min, int max)
 	int		sign;
 
 	size = count(*a);
-	middle = get_middle_curr(*a, min, max);				//Необходимо усовершенствовать алгоритм
-	balance_b = count_balance(*a, middle, max, 'b');	//Тут тоже!
-	balance_a = count_balance(*a, min, middle, 'a');	//И тут...
+	middle = get_middle_curr(*a, min, max);
+	balance_b = count_balance(*a, middle, max, 'b');
+	balance_a = count_balance(*a, min, middle, 'a');
+	i = 0;
+	if (balance_a > 3)
+		sorting(a, b, min, middle);
+	sign = presort(*a, balance_a, middle, size);
+	while (balance_a && i < size)
+	{
+		if ((*a)->data < middle && (*a)->data >= min)
+		{
+			PB;
+			balance_a--;
+		}
+		else
+		{
+			if (sign == 1)
+			{
+				RA;
+			}
+			else
+				RRA;
+		}
+		i++;
+	}
 	i = 0;
 	if (balance_b > 3)
 		sorting(a, b, middle, max);
 	sign = presort(*a, balance_b, middle, size);
-	while (balance_b && i < size)
+	while (balance_b && i < count(*a) && i < size && count(*a) > 3 && a != NULL)
 	{
 		if ((*a)->data >= middle && (*a)->data <= max)
 		{
@@ -88,28 +110,6 @@ void	sorting(t_stack **a, t_stack **b, int min, int max)
 			}
 			else
 				RA;
-		}
-		i++;
-	}
-	i = 0;
-	if (balance_a > 3)
-		sorting(a, b, min, middle);
-	sign = presort(*a, balance_a, middle, size);
-	while (balance_a && a != NULL && i < count(*a) && count(*a) > 3)
-	{
-		if ((*a)->data < middle && (*a)->data > min)
-		{
-			PB;
-			balance_a--;
-		}
-		else
-		{
-			if (sign == 1)
-			{
-				RA;
-			}
-			else
-				RRA;
 		}
 		i++;
 	}
