@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME1 = push_swap
-SRC = commands.c include.c middle.c push_swap.c sort.c
+SRC = commands.c include.c middle.c push_swap.c sort.c dop.c
 CC = gcc
 LIB = libft/libft.a
 FLAGS = -Wall -Wextra -Werror

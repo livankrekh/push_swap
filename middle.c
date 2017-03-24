@@ -52,12 +52,27 @@ int		compare(int curr, int next, int middle)
 	return (0);
 }
 
+int		get_middle_curr(t_stack *a, int max, int min)
+{
+	int		middle_val;
+	int		res;
+
+	middle_val = (max - min) / 2 + min;
+	while (a != NULL)
+	{
+		if (compare(res, a->data, middle_val))
+			res = a->data;
+		a = a->next;
+	}
+	return (res);
+}
+
 int		get_middle(t_stack *a)
 {
 	int		middle_val;
 	int		res;
 
-	middle_val = (max_a(a) - min_a(a)) / 2 + 1;
+	middle_val = (max_a(a) + min_a(a)) / 2;
 	while (a != NULL)
 	{
 		if (compare(res, a->data, middle_val))

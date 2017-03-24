@@ -53,6 +53,25 @@ void	r(t_stack **a, char *flag)
 {
 	t_stack	*curr;
 	int		tmp;
+	t_stack	*tmp2;
+
+	curr = (*a);
+	tmp = curr->data;
+	while (curr->next != NULL)
+	{
+		tmp2 = curr->next;
+		curr->data = tmp2->data;
+		curr = tmp2;
+	}
+	curr->data = tmp;
+	ft_putstr(flag);
+	ft_putstr("\n");
+}
+
+void	reverse(t_stack **a, char *flag)
+{
+	t_stack	*curr;
+	int		tmp;
 	int		tmp2;
 
 	curr = (*a)->next;
@@ -75,37 +94,8 @@ void	rr(t_stack **a, t_stack **b)
 	r(b, "rr");
 }
 
-void	reverse(t_stack **a, char *flag, int i)
-{
-	int		*arr;
-	t_stack	*ptr;
-
-	ptr = *a;
-	while (ptr != NULL)
-	{
-		ptr = ptr->next;
-		i++;
-	}
-	arr = (int*)malloc(sizeof(int) * i);
-	ptr = *a;
-	while (ptr != NULL)
-	{
-		arr[--i] = ptr->data;
-		ptr = ptr->next;
-	}
-	ptr = *a;
-	while (ptr != NULL)
-	{
-		ptr->data = arr[i++];
-		ptr = ptr->next;
-	}
-	free(arr);
-	ft_putstr(flag);
-	ft_putstr("\n");
-}
-
 void	rrr(t_stack **a, t_stack **b)
 {
-	reverse(a, "", 0);
-	reverse(b, "rrr", 0);
+	reverse(a, "");
+	reverse(b, "rrr");
 }

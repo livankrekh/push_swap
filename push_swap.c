@@ -17,13 +17,13 @@ int		main(int argc, char **argv)
 	int			i;
 	t_stack		*a;
 	t_stack		*b;
-	int 		middle;
 
 	i = 0;
+	b = NULL;
 	a = (t_stack*)malloc(sizeof(t_stack));
 	if (stack_input(a, argv, argc) == 0)
 		return (-1);
-	middle = get_middle(a);
-	sorting(a, b, middle);
+	sorting(&a, &b, min_a(a), max_a(a));
+	print_stack(a, b);
 	return (0);
 }

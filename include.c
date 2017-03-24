@@ -12,10 +12,9 @@
 
 #include "push_swap.h"
 
-int		valid(char *n)
+int		valid(char *n, char **argv, int argc, int index)
 {
 	int			i;
-	long long	numb;
 
 	i = n[0] == '-' ? 1 : 0;
 	while (n[i] != '\0')
@@ -35,6 +34,14 @@ int		valid(char *n)
 		ft_putstr(n);
 		return (0);
 	}
+	while (argc > 0)
+	{
+		if (ft_atoi(n) == ft_atoi(argv[--argc]) && argc != index && argc != 0)
+		{
+			write(1, "Similar arguments!\n", 19);
+			return (0);
+		}
+	}
 	return (1);
 }
 
@@ -42,12 +49,16 @@ int 	dop(char *arg, t_stack **a)
 {
 	char	**tmp;
 	int 	i;
+	int 	size;
 
 	i = 0;
+	size = 0;
 	tmp = ft_strsplit(arg, ' ');
+	while (tmp[size] != NULL)
+		size++;
 	while (tmp[i] != NULL)
 	{
-		if (valid(tmp[i]) == 0)
+		if (valid(tmp[i], tmp, size, i) == 0)
 			return (0);
 		(*a)->data = ft_atoi(tmp[i]);
 		(*a)->next = NULL;
@@ -73,7 +84,7 @@ int 	stack_input(t_stack *a, char **argv, int argc)
 	}
 	while (i < argc && argc != 2)
 	{
-		if (valid(argv[i]) == 0)
+		if (valid(argv[i], argv, argc, i) == 0)
 			return (0);
 		a->data = ft_atoi(argv[i]);
 		a->next = NULL;
