@@ -78,12 +78,16 @@ void	sort(t_stack **a, int size)
 	}
 	else if ((*a)->data < elem2->data && elem2->data > elem3->data && elem3->data < (*a)->data)
 	{
+		RA;
+		SA;
 		RRA;
+		SA;
 	}
 	else if ((*a)->data < elem2->data && elem2->data > elem3->data && elem3->data > (*a)->data)
 	{
-		RRA;
+		RA;
 		SA;
+		RRA;
 	}
 	else if ((*a)->data > elem2->data && elem2->data > elem3->data && elem3->data < (*a)->data)
 	{
@@ -136,7 +140,7 @@ void	reverse_sorting(t_stack **a, t_stack **b, int size, int min)
 	balance_b = count_balance(*b, min, middle, 'b');
 	if (balance_a > 3)
 		reverse_sorting(a, b, balance_a, middle);
-	while (balance_a && i < size)
+	while (balance_a && i < size + 1)
 	{
 		if ((*b)->data >= middle)
 		{
@@ -153,14 +157,15 @@ void	reverse_sorting(t_stack **a, t_stack **b, int size, int min)
 	while (count--)
 		RRB;
 	sort(a, size);
+	printf("MIDDLE = %d\n", middle);
 	print_stack(*a, *b);
 	if (balance_b > 3)
 		reverse_sorting(a, b, balance_b, min);
 	count = 0;
 	i = 0;
-	while (balance_b && i < size)
+	while (balance_b && i < size + 1)
 	{
-		if ((*b)->data < middle)
+		if ((*b)->data < middle && (*b)->data >= min)
 		{
 			PA;
 			balance_b--;
@@ -175,6 +180,12 @@ void	reverse_sorting(t_stack **a, t_stack **b, int size, int min)
 	while (count--)
 		RRB;
 	sort(a, size);
+	printf("MIDDLE = %d\n", middle);
+	print_stack(*a, *b);
+	// if (is_sorted(*a) == 1)
+	// 	printf("\033[32mOK!!!\033[0m");
+	// else
+	// 	printf("\033[31mKO!!!\033[0m");
 }
 
 void	sorting(t_stack **a, t_stack **b, int min, int max)
@@ -216,6 +227,8 @@ void	sorting(t_stack **a, t_stack **b, int min, int max)
 		sorting(a, b, middle, max);
 	if (count(*a) < 4)
 		sort(a, count(*a));
+	//printf("BALANCE_B = %d\n", balance_copy);
+	printf("ENTER\n");
 	reverse_sorting(a, b, balance_copy, min);
 }
 
