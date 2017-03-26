@@ -21,19 +21,24 @@ FLAGS = -Wall -Wextra -Werror
 all: $(NAME1)
 
 $(NAME1): $(LIB) $(SRC:.c=.o)
-	$(CC) -o $(NAME1) $(LIB) $(SRC:.c=.o) $(FLAGS)
+	@echo ">\033[32mCompiling executable file\033[0m"
+	@ $(CC) -o $(NAME1) $(LIB) $(SRC:.c=.o) $(FLAGS)
+	@echo ">\033[32mCompiling finished successfuly!\033[0m\n"
 
 $(LIB):
-	make -C ./libft
+	@echo ">\033[32mStarting compile LIBFT library...\033[0m"
+	@make -C ./libft
+	@echo ">\033[32mStarting compile project files...\033[0m"
 
 %.o: %.c
-	$(CC) -o $@ -c $< $(FLAGS)
+	@ $(CC) -o $@ -c $< $(FLAGS)
 
 clean:
-	make clean -C ./libft
-	rm -f $(SRC:.c=.o)
+	@make clean -C ./libft
+	@rm -f $(SRC:.c=.o)
 
 fclean: clean
-	rm -f $(LIB) $(NAME1)
+	@rm -f $(LIB) $(NAME1)
+	@echo ">\033[32mCleaning successfull!\033[0m\n"
 
 re: fclean all

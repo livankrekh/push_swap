@@ -24,6 +24,6 @@ int		main(int argc, char **argv)
 	if (stack_input(a, argv, argc) == 0)
 		return (-1);
 	sorting(&a, &b, min_a(a), max_a(a));
-	print_stack(a, b);
+	//print_stack(a, b);
 	return (0);
 }

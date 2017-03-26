@@ -42,7 +42,6 @@ void			ss(t_stack *a, t_stack *b);
 void			p(t_stack **target, t_stack **from, char *flag);
 void			r(t_stack **a, char *flag);
 void			reverse(t_stack **a, char *flag);
-int				get_middle(t_stack *a);
 void			sorting(t_stack **a, t_stack **b, int min, int max);
 int				max_a(t_stack *a);
 int				min_a(t_stack *a);
@@ -50,5 +49,6 @@ void			print_stack(t_stack *a, t_stack *b);
 int				count(t_stack *a);
 int				is_sorted(t_stack *a);
 int				get_middle_curr(t_stack *a, int max, int min);
+int				count_balance(t_stack *a, int min, int middle, char flag);
 
 #endif

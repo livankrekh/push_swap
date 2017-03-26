@@ -12,21 +12,32 @@
 
 #include "push_swap.h"
 
-void	print_stack(t_stack *a, t_stack *b)
+int		min_a(t_stack *a)
 {
-	printf("___________________________________________\n");
+	int		res;
+
+	res = a->data;
 	while (a != NULL)
 	{
-		printf("%d -> ", a->data);
+		if (res > a->data)
+			res = a->data;
 		a = a->next;
 	}
-	printf("| a\n");
-	while (b != NULL)
+	return (res);
+}
+
+int		max_a(t_stack *a)
+{
+	int		res;
+
+	res = a->data;
+	while (a != NULL)
 	{
-		printf("%d -> ", b->data);
-		b = b->next;
+		if (res < a->data)
+			res = a->data;
+		a = a->next;
 	}
-	printf("| b\n");
+	return (res);
 }
 
 int		count(t_stack *a)
@@ -54,4 +65,21 @@ int		is_sorted(t_stack *a)
 		a = a->next;
 	}
 	return (1);
+}
+
+void	print_stack(t_stack *a, t_stack *b)
+{
+	printf("___________________________________________\n");
+	while (a != NULL)
+	{
+		printf("%d -> ", a->data);
+		a = a->next;
+	}
+	printf("| a\n");
+	while (b != NULL)
+	{
+		printf("%d -> ", b->data);
+		b = b->next;
+	}
+	printf("| b\n");
 }
