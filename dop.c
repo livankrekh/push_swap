@@ -70,9 +70,19 @@ int		is_sorted(t_stack *a)
 
 void	print_stack(t_stack *a, t_stack *b)
 {
+	int		sign;
+	t_stack	*lol;
+
+	sign = 0;
 	printf("___________________________________________\n");
 	while (a != NULL)
 	{
+		lol = a->next;
+		if (lol != NULL)
+		{
+			if (a->data > lol->data)
+				sign++;
+		}
 		printf("%d -> ", a->data);
 		a = a->next;
 	}
@@ -83,4 +93,9 @@ void	print_stack(t_stack *a, t_stack *b)
 		b = b->next;
 	}
 	printf("| b\n");
+	if (sign != 0)
+		printf("\033[31mKO\033[0m\n");
+	else
+		printf("\033[32mOK\033[0m\n");
+	printf("SIGN = %d\n", sign);
 }

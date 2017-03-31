@@ -46,9 +46,9 @@ void			sorting(t_stack **a, t_stack **b, int min, int max);
 int				max_a(t_stack *a);
 int				min_a(t_stack *a);
 void			print_stack(t_stack *a, t_stack *b);
-int				count(t_stack *a);
 int				is_sorted(t_stack *a);
 int				get_middle_curr(t_stack *a, int max, int min);
 int				count_balance(t_stack *a, int min, int middle, char flag);
+int				count(t_stack *a);
 
 #endif
