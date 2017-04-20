@@ -115,6 +115,40 @@ int		check_a(t_stack *a, int size)
 	return (0);
 }
 
+void	simple_sort_b(t_stack **b, int len, t_cmd **cmd)
+{
+	t_stack	*elem2;
+	t_stack *elem3;
+
+	elem2 = NULL;
+	elem3 = NULL;
+	if (len == 2)
+	{
+		cmd_list(cmd, SB);
+		return ;
+	}
+	if ((*b)->next != NULL)
+		elem2 = (*b)->next;
+	if (elem2 != NULL)
+		elem3 = elem2->next;
+	if ((*b)->data < elem2->data && elem2->data > elem3->data && elem3->data < (*b)->data)
+		cmd_list(cmd, SB);
+	else if ((*b)->data > elem2->data && elem2->data < elem3->data && elem3->data > (*b)->data)
+		cmd_list(cmd, RRB);
+	else if ((*b)->data > elem2->data && elem2->data < elem3->data && elem3->data < (*b)->data)
+	{
+		cmd_list(cmd, RRB);
+		cmd_list(cmd, RRB);
+	}
+	else if ((*b)->data < elem2->data && elem2->data < elem3->data && elem3->data > (*b)->data)
+	{
+		cmd_list(cmd, SB);
+		cmd_list(cmd, RRB);
+	}
+	else if ((*b)->data < elem2->data && elem2->data > elem3->data && elem3->data > (*b)->data)
+		cmd_list(cmd, RB);
+}
+
 void	simple_sort_a(t_stack **a, int len, t_cmd **cmd)
 {
 	t_stack	*elem2;
@@ -344,7 +378,7 @@ void	sort_all(t_stack **a, t_stack **b, t_inf param, t_cmd **cmd)
 		else if (a_check == 0)
 		{
 			if (count(*b) <= 3)
-				simple_sort_a(b, param.pushed, cmd);
+				simple_sort_b(b, param.pushed, cmd);
 			else
 				sort_b(b, param.pushed, cmd);
 		}
