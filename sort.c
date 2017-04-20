@@ -12,97 +12,449 @@
 
 #include "push_swap.h"
 
-int		count_balance(t_stack *a, int min, int middle, char flag)
+void	cmd_list(t_cmd **cmd, int sign)
 {
-	int		res;
+	t_cmd	*tmp;
+	t_cmd	*tmp2;
 
-	res = 0;
-	while (a != NULL)
+	tmp2 = (*cmd);
+	tmp = (t_cmd*)malloc(sizeof(t_cmd));
+	tmp->data = ft_strnew((sign > 30) ? 4 : 3);
+	tmp->next = NULL;
+	if (sign == 1)
+		ft_strncpy(tmp->data, "sa\n", 3);
+	else if (sign == 2)
+		ft_strncpy(tmp->data, "sb\n", 3);
+	else if (sign == 3)
+		ft_strncpy(tmp->data, "ss\n", 3);
+	else if (sign == 11)
+		ft_strncpy(tmp->data, "pa\n", 3);
+	else if (sign == 12)
+		ft_strncpy(tmp->data, "pb\n", 3);
+	else if (sign == 21)
+		ft_strncpy(tmp->data, "ra\n", 3);
+	else if (sign == 22)
+		ft_strncpy(tmp->data, "rb\n", 3);
+	else if (sign == 23)
+		ft_strncpy(tmp->data, "rr\n", 3);
+	else if (sign == 31)
+		ft_strncpy(tmp->data, "rra\n", 4);
+	else if (sign == 32)
+		ft_strncpy(tmp->data, "rrb\n", 4);
+	else if (sign == 33)
+		ft_strncpy(tmp->data, "rrr\n", 4);
+	if (*cmd == NULL)
+		*cmd = tmp;
+	else
 	{
-		if (flag == 'a')
-		{
-			if (a->data <= middle && a->data >= min)
-				res++;
-		}
-		else
-		{
-			if (a->data < middle && a->data >= min)
-				res++;
-		}
-		a = a->next;
+		while (tmp2->next != NULL)
+			tmp2 = tmp2->next;
+		tmp2->next = tmp;
 	}
-	return (res);
 }
 
-int		presort(t_stack *a, int balance, int middle, int size)
-{
-	int		res;
-	int		index;
-
-	res = 0;
-	index = 0;
-	while (a != NULL)
-	{
-		if (a->data > middle)
-		{
-			if (index >= size / 2)
-				res++;
-		}
-		index++;
-		a = a->next;
-	}
-	if (balance / 2 < res)
-		return (1);
-	return (0);
-}
-
-void	sort(t_stack **a, int size)
+int		check_b(t_stack *b, int size)
 {
 	t_stack	*elem2;
 	t_stack *elem3;
 
 	elem2 = NULL;
 	elem3 = NULL;
+	if (size == 1)
+		return (0);
+	if (b->next != NULL)
+		elem2 = b->next;
+	if (elem2 != NULL)
+		elem3 = elem2->next;
+	if (size == 2)
+	{
+		if (b->data < elem2->data)
+			return (1);
+	}
+	else if (b->data < elem2->data && elem2->data > elem3->data && elem3->data < b->data)
+		return (1);
+	else if (b->data > elem2->data && elem2->data < elem3->data && elem3->data > b->data)
+		return (2);
+	else if (b->data > elem2->data && elem2->data < elem3->data && elem3->data < b->data)
+		return (3);
+	else if (b->data < elem2->data && elem2->data < elem3->data && elem3->data > b->data)
+		return (4);
+	else if (b->data < elem2->data && elem2->data > elem3->data && elem3->data > b->data)
+		return (5);
+	return (0);
+}
+
+int		check_a(t_stack *a, int size)
+{
+	t_stack	*elem2;
+	t_stack *elem3;
+
+	elem2 = NULL;
+	elem3 = NULL;
+	if (size == 1)
+		return (0);
+	if (a->next != NULL)
+		elem2 = a->next;
+	if (elem2 != NULL)
+		elem3 = elem2->next;
+	if (size == 2)
+	{
+		if (a->data > elem2->data)
+			return (1);
+	}
+	else if (a->data > elem2->data && elem2->data < elem3->data && elem3->data > a->data)
+		return (1);
+	else if (a->data < elem2->data && elem2->data > elem3->data && elem3->data < a->data)
+		return (2);
+	else if (a->data < elem2->data && elem2->data > elem3->data && elem3->data > a->data)
+		return (3);
+	else if (a->data > elem2->data && elem2->data > elem3->data && elem3->data < a->data)
+		return (4);
+	else if (a->data > elem2->data && elem2->data < elem3->data && elem3->data < a->data)
+		return (5);
+	return (0);
+}
+
+void	simple_sort_a(t_stack **a, int len, t_cmd **cmd)
+{
+	t_stack	*elem2;
+	t_stack *elem3;
+
+	elem2 = NULL;
+	elem3 = NULL;
+	if (len == 2)
+	{
+		cmd_list(cmd, SA);
+		return ;
+	}
 	if ((*a)->next != NULL)
 		elem2 = (*a)->next;
 	if (elem2 != NULL)
 		elem3 = elem2->next;
-	if (size < 3)
-	{
-		if ((*a)->data > elem2->data)
-			SA;
-	}
-	else if ((*a)->data > elem2->data && elem2->data < elem3->data && elem3->data > (*a)->data)
-	{
-		SA;
-	}
+	if ((*a)->data > elem2->data && elem2->data < elem3->data && elem3->data > (*a)->data)
+		cmd_list(cmd, SA);
 	else if ((*a)->data < elem2->data && elem2->data > elem3->data && elem3->data < (*a)->data)
-	{
-		RA;
-		SA;
-		RRA;
-		SA;
-	}
+		cmd_list(cmd, RRA);
 	else if ((*a)->data < elem2->data && elem2->data > elem3->data && elem3->data > (*a)->data)
 	{
-		RA;
-		SA;
-		RRA;
+		cmd_list(cmd, RRA);
+		cmd_list(cmd, SA);
 	}
 	else if ((*a)->data > elem2->data && elem2->data > elem3->data && elem3->data < (*a)->data)
 	{
-		SA;
-		RA;
-		SA;
-		RRA;
-		SA;
+		cmd_list(cmd, RA);
+		cmd_list(cmd, SA);
 	}
-	else if ((*a)->data > elem2->data < elem3->data && elem3->data < (*a)->data)
+	else if ((*a)->data > elem2->data && elem2->data < elem3->data && elem3->data < (*a)->data)
+		cmd_list(cmd, RA);
+}
+
+void	sort_all(t_stack **a, t_stack **b, t_inf param, t_cmd **cmd)
+{
+	int		a_check;
+	int		b_check;
+
+	a_check = check_a(*a, param.len);
+	b_check = check_b(*b, param.pushed);
+	if (a_check == b_check)
 	{
-		SA;
-		RA;
-		SA;
-		RRA;
+		if (a_check == 1)
+			cmd_list(cmd, SS);
+		else if (a_check == 2)
+		{
+			cmd_list(cmd, RR);
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RRR);
+			cmd_list(cmd, SS);
+		}
+		else if (a_check == 3)
+		{
+			cmd_list(cmd, RR);
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RRR);
+		}
+		else if (a_check == 4)
+		{
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RR);
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RRR);
+			cmd_list(cmd, SS);
+		}
+		else if (a_check == 5)
+		{
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RR);
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RRR);
+		}
+	}
+	else
+	{
+		if (a_check == 1 && b_check == 2)
+		{
+			cmd_list(cmd, RB);
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RRB);
+			cmd_list(cmd, SB);
+		}
+		else if (a_check == 1 && b_check == 3)
+		{
+			cmd_list(cmd, RB);
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RRB);
+		}
+		else if (a_check == 1 && b_check == 4)
+		{
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RB);
+			cmd_list(cmd, SB);
+			cmd_list(cmd, RRB);
+			cmd_list(cmd, SB);
+		}
+		else if (a_check == 1 && b_check == 5)
+		{
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RB);
+			cmd_list(cmd, SB);
+			cmd_list(cmd, RRB);
+		}
+		else if (a_check == 2 && b_check == 1)
+		{
+			cmd_list(cmd, RA);
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RRA);
+			cmd_list(cmd, SA);
+		}
+		else if (a_check == 2 && b_check == 3)
+		{
+			cmd_list(cmd, RR);
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RRR);
+			cmd_list(cmd, SA);
+		}
+		else if (a_check == 2 && b_check == 4)
+		{
+			cmd_list(cmd, RA);
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RB);
+			cmd_list(cmd, SB);
+			cmd_list(cmd, RRR);
+			cmd_list(cmd, SS);
+		}
+		else if (a_check == 2 && b_check == 5)
+		{
+			cmd_list(cmd, RA);
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RB);
+			cmd_list(cmd, RRA);
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RRB);
+		}
+		else if (a_check == 3 && b_check == 1)
+		{
+			cmd_list(cmd, RA);
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RRA);
+		}
+		else if (a_check == 3 && b_check == 2)
+		{
+			cmd_list(cmd, RR);
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RRR);
+			cmd_list(cmd, SB);
+		}
+		else if (a_check == 3 && b_check == 4)
+		{
+			cmd_list(cmd, SB);
+			cmd_list(cmd, RR);
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RRR);
+			cmd_list(cmd, SB);
+		}
+		else if (a_check == 3 && b_check == 5)
+		{
+			cmd_list(cmd, SB);
+			cmd_list(cmd, RR);
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RRR);
+		}
+		else if (a_check == 4 && b_check == 1)
+		{
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RA);
+			cmd_list(cmd, SA);
+			cmd_list(cmd, RRA);
+			cmd_list(cmd, SA);
+		}
+		else if (a_check == 4 && b_check == 2)
+		{
+			cmd_list(cmd, SA);
+			cmd_list(cmd, RR);
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RRR);
+			cmd_list(cmd, SS);
+		}
+		else if (a_check == 4 && b_check == 3)
+		{
+			cmd_list(cmd, SA);
+			cmd_list(cmd, RR);
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RRR);
+			cmd_list(cmd, SA);
+		}
+		else if (a_check == 4 && b_check == 5)
+		{
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RR);
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RRR);
+			cmd_list(cmd, SA);
+		}
+		else if (a_check == 5 && b_check == 1)
+		{
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RA);
+			cmd_list(cmd, SA);
+			cmd_list(cmd, RRA);
+		}
+		else if (a_check == 5 && b_check == 2)
+		{
+			cmd_list(cmd, SA);
+			cmd_list(cmd, RR);
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RRR);
+			cmd_list(cmd, SB);
+		}
+		else if (a_check == 5 && b_check == 3)
+		{
+			cmd_list(cmd, SA);
+			cmd_list(cmd, RR);
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RRR);
+		}
+		else if (a_check == 5 && b_check == 4)
+		{
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RR);
+			cmd_list(cmd, SS);
+			cmd_list(cmd, RRR);
+			cmd_list(cmd, SB);
+		}
+		else if (a_check == 0)
+		{
+			if (count(*b) <= 3)
+				simple_sort_a(b, param.pushed, cmd);
+			else
+				sort_b(b, param.pushed, cmd);
+		}
+		else if (b_check == 0)
+		{
+			if (count(*a) <= 3)
+				simple_sort_a(a, param.len, cmd);
+			else
+				sort(a, param.len, cmd);
+		}
+	}
+}
+
+void	sort_b(t_stack **b, int size, t_cmd **cmd)
+{
+	t_stack	*elem2;
+	t_stack *elem3;
+
+	elem2 = NULL;
+	elem3 = NULL;
+	if (size == 1)
+		return ;
+	if ((*b)->next != NULL)
+		elem2 = (*b)->next;
+	if (elem2 != NULL)
+		elem3 = elem2->next;
+	if (size == 2)
+	{
+		if ((*b)->data < elem2->data)
+			cmd_list(cmd, SB);
+	}
+	else if ((*b)->data > elem2->data && elem2->data < elem3->data && elem3->data > (*b)->data) //2
+	{
+		cmd_list(cmd, RB);
+		cmd_list(cmd, SB);
+		cmd_list(cmd, RRB);
+		cmd_list(cmd, SB);
+	}
+	else if ((*b)->data < elem2->data && elem2->data > elem3->data && elem3->data < (*b)->data) //1
+		cmd_list(cmd, SB);
+	else if ((*b)->data < elem2->data && elem2->data > elem3->data && elem3->data > (*b)->data) //5
+	{
+		cmd_list(cmd, SB);
+		cmd_list(cmd, RB);
+		cmd_list(cmd, SB);
+		cmd_list(cmd, RRB);
+	}
+	else if ((*b)->data > elem2->data && elem2->data < elem3->data && elem3->data < (*b)->data) //3
+	{
+		cmd_list(cmd, RB);
+		cmd_list(cmd, SB);
+		cmd_list(cmd, RRB);
+	}
+	else if ((*b)->data < elem2->data && elem2->data < elem3->data && elem3->data > (*b)->data) //4
+	{
+		cmd_list(cmd, SB);
+		cmd_list(cmd, RB);
+		cmd_list(cmd, SB);
+		cmd_list(cmd, RRB);
+		cmd_list(cmd, SB);
+	}
+}
+
+void	sort(t_stack **a, int size, t_cmd **cmd)
+{
+	t_stack	*elem2;
+	t_stack *elem3;
+
+	elem2 = NULL;
+	elem3 = NULL;
+	if (size == 1)
+		return ;
+	if ((*a)->next != NULL)
+		elem2 = (*a)->next;
+	if (elem2 != NULL)
+		elem3 = elem2->next;
+	if (size == 2)
+	{
+		if ((*a)->data > elem2->data)
+			cmd_list(cmd, SA);
+	}
+	else if ((*a)->data > elem2->data && elem2->data < elem3->data && elem3->data > (*a)->data)
+		cmd_list(cmd, SA);
+	else if ((*a)->data < elem2->data && elem2->data > elem3->data && elem3->data < (*a)->data)
+	{
+		cmd_list(cmd, RA);
+		cmd_list(cmd, SA);
+		cmd_list(cmd, RRA);
+		cmd_list(cmd, SA);
+	}
+	else if ((*a)->data < elem2->data && elem2->data > elem3->data && elem3->data > (*a)->data)
+	{
+		cmd_list(cmd, RA);
+		cmd_list(cmd, SA);
+		cmd_list(cmd, RRA);
+	}
+	else if ((*a)->data > elem2->data && elem2->data > elem3->data && elem3->data < (*a)->data)
+	{
+		cmd_list(cmd, SA);
+		cmd_list(cmd, RA);
+		cmd_list(cmd, SA);
+		cmd_list(cmd, RRA);
+		cmd_list(cmd, SA);
+	}
+	else if ((*a)->data > elem2->data && elem2->data < elem3->data && elem3->data < (*a)->data)
+	{
+		cmd_list(cmd, SA);
+		cmd_list(cmd, RA);
+		cmd_list(cmd, SA);
+		cmd_list(cmd, RRA);
 	}
 }
 
@@ -123,154 +475,151 @@ int		max_period(t_stack *a, int size)
 	return (res);
 }
 
-void	reverse_sorting(t_stack **a, t_stack **b, int size, int min)
+int		min_period(t_stack *a, int size)
 {
-	int		balance_a;
-	int		middle;
-	int		balance_b;
-	int		counter;
-	int		i;
-	int		sign;
+	int		res;
 
-	counter = 0;
-	i = 0;
-	sign = 0;
-	if (size == 0)
-		return ;
-	if (count(*a) - count(*b) <= 2 || count(*a) - count(*b) >= -2)
+	res = a->data;
+	if (a == NULL)
+		return (0);
+	while (size && a != NULL)
 	{
-		sign = 1;
-		size = count(*b);
+		if (res > a->data)
+			res = a->data;
+		a = a->next;
+		size--;
 	}
-	middle = get_middle_curr(*b, min, max_period(*b, size));
-	balance_a = count_balance(*b, middle, max_period(*b, size), 'a');
-	balance_b = count_balance(*b, min, middle, 'b');
-	if (balance_a > 3)
-		reverse_sorting(a, b, balance_a, middle);
-	while (balance_a && i < size && *b)
-	{
-		if ((*b)->data >= middle)
-		{
-			PA;
-			balance_a--;
-		}
-		else
-		{
-			RB;
-			counter++;
-		}
-		i++;
-	}
-	while (counter-- && sign == 0)
-		RRB;
-	sort(a, size);
-	if (balance_b > 3)
-		reverse_sorting(a, b, balance_b, min);
-	counter = 0;
-	i = 0;
-	while (balance_b && i < size && *b)
-	{
-		if ((*b)->data < middle && (*b)->data >= min)
-		{
-			PA;
-			balance_b--;
-		}
-		else
-		{
-			RB;
-			counter++;
-		}
-		i++;
-	}
-	// while (counter-- && sign == 0)
-	// 	RRB;
-	sort(a, size);
+	return (res);
 }
 
-void	sorting(t_stack **a, t_stack **b, int min, int max)
+int		push_next(t_stack *a, char sign, int len, int middle)
 {
-	int		middle;
+	t_stack	*tmp;
+
+	tmp = a;
+	while (len-- && tmp != NULL)
+	{
+		if (sign == 'a' && tmp->data < middle)
+			return (1);
+		if (sign == 'b' && tmp->data > middle)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+void	back_a(t_stack **a, int rotate, t_cmd **cmd)
+{
 	int		size;
-	int		balance_b;
-	int		balance_a;
-	int		i;
-	int		sign;
-	int		balance_copy;
 
 	size = count(*a);
-	middle = get_middle_curr(*a, min, max);
-	balance_b = count_balance(*a, min, middle, 'b');
-	balance_copy = balance_b;
-	balance_a = count_balance(*a, middle, max, 'a');
-	i = 0;
-	sign = presort(*a, balance_b, middle, size);
-	while (balance_b)
+	if (rotate > size / 2)
 	{
-		if ((*a)->data < middle && (*a)->data >= min)
+		while (size - rotate++ > 0)
+			cmd_list(cmd, RA);
+	}
+	else
+	{
+		while (rotate--)
+			cmd_list(cmd, RRA);
+	}
+}
+
+void	back_b(t_stack **b, int rotate, t_cmd **cmd)
+{
+	int		size;
+
+	size = count(*b);
+	if (rotate > size / 2 > 0)
+	{
+		while (size - rotate++)
+			cmd_list(cmd, RB);
+	}
+	else
+	{
+		while (rotate--)
+			cmd_list(cmd, RRB);
+	}
+}
+
+void	sorting_b(t_stack **a, t_stack **b, t_inf param, t_cmd **cmd)
+{
+	int		middle;
+	int		rotate;
+	int		i;
+	int		push;
+
+	rotate = 0;
+	push = 0;
+	i = 0;
+	if (param.len <= 3)
+	{
+		sort_b(b, param.len, cmd);
+		return ;
+	}
+	middle = get_middle_curr(*b, param.len);
+	while (push_next(*b, 'b', param.len - i, middle) && i++ < param.len)
+	{
+		if ((*b)->data > middle)
 		{
-			PB;
-			balance_b--;
+			cmd_list(cmd, PA);
+			push++;
 		}
 		else
 		{
-			if (sign == 1)
-			{
-				RA;
-			}
-			else
-				RRA;
+			cmd_list(cmd, RB);
+			rotate++;
 		}
-		i++;
 	}
-	if (balance_a > 3)
-		sorting(a, b, middle, max);
-	if (count(*a) < 4)
-		sort(a, count(*a));
-	reverse_sorting(a, b, balance_copy, min);
+	i = param.len;
+	param.len = push;
+	param.pushed = i - push;
+	sorting_a(a, b, param, cmd);
+	back_b(b, rotate, cmd);
+	param.len = i - push;
+	param.pushed = push;
+	sorting_b(a, b, param, cmd);
+	while (push--)
+		cmd_list(cmd, PB);
 }
 
-// void	sorting(t_stack **a, t_stack **b, int min, int max)
-// {
-// 	int		middle;
-// 	int		i;
-// 	int		balance_b;
-// 	int		sign;
-// 	int		size;
-// 	t_stack	*tmp;
+void	sorting_a(t_stack **a, t_stack **b, t_inf param, t_cmd **cmd)
+{
+	int		middle;
+	int		rotate;
+	int		i;
+	int		push;
 
-// 	tmp = *a;
-// 	size = count(*a);
-// 	middle = get_middle_curr(*a, min, max);
-// 	balance_b = count_balance(*a, min, middle, 'b');
-// 	while (size > 3 && get_middle_curr(*a, min, max))
-// 	{
-// 		middle = get_middle_curr(*a, min, max);
-// 		balance_b = count_balance(*a, min, middle, 'b');
-// 		printf("BALANCE = %d\n", balance_b);
-// 		printf("MIDDLE = %d\n", middle);
-// 		sign = presort(*a, balance_b, middle, count(*a));
-// 		i = 0;
-// 		while (balance_b && i < size)
-// 		{
-// 			if ((*a)->data < middle && (*a)->data >= min)
-// 			{
-// 				// printf("i = %d\n", balance_b);
-// 				PB;
-// 				balance_b--;
-// 			}
-// 			// else
-// 			// {
-// 			// 	if (sign == 1)
-// 			// 	{
-// 			// 		RA;
-// 			// 	}
-// 			// 	else
-// 			// 		RRA;
-// 			// }
-// 			RA;
-// 			i++;
-// 		}
-// 		size = count(*a);
-// 		min = middle;
-// 	}
-// }
+	rotate = 0;
+	push = 0;
+	i = 0;
+	if (param.len <= 3)
+	{
+		sort_all(a, b, param, cmd);
+		return ;
+	}
+	middle = get_middle_curr(*a, param.len);
+	while (push_next(*a, 'a', param.len - i, middle) && i++ < param.len)
+	{
+		if ((*a)->data < middle)
+		{
+			cmd_list(cmd, PB);
+			push++;
+		}
+		else
+		{
+			cmd_list(cmd, RA);
+			rotate++;
+		}
+	}
+	back_a(a, rotate, cmd);
+	i = param.len;
+	param.len = i - push;
+	param.pushed = push;
+	sorting_a(a, b, param, cmd);
+	param.len = push;
+	param.pushed = i - push;
+	sorting_b(a, b, param, cmd);
+	while (push--)
+		cmd_list(cmd, PA);
+}

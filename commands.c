@@ -12,49 +12,58 @@
 
 #include "push_swap.h"
 
-void	s(t_stack *a, char *flag)
+int		s(t_stack *a, char flag)
 {
 	int		tmp;
 	t_stack	*next;
 
-	tmp = a->data;
-	next = a->next;
-	a->data = next->data;
-	next->data = tmp;
-	ft_putstr(flag);
-	ft_putstr("\n");
+	if (a != NULL)
+	{
+		tmp = a->data;
+		next = a->next;
+		a->data = next->data;
+		next->data = tmp;
+	}
+	if (flag == 'a')
+		return (1);
+	return (2);
 }
 
-void	ss(t_stack *a, t_stack *b)
+int		ss(t_stack *a, t_stack *b)
 {
-	s(a, "");
-	s(b, "ss");
+	s(a, 'a');
+	s(b, 'b');
+	return (3);
 }
 
-void	p(t_stack **target, t_stack **from, char *flag)
+int		p(t_stack **target, t_stack **from, char flag)
 {
 	t_stack	*prev;
 	t_stack *tmp;
 
-	if (*from == NULL)
-		return ;
-	prev = (t_stack*)malloc(sizeof(t_stack));
-	prev->data = (*from)->data;
-	prev->next = *target;
-	*target = prev;
-	tmp = *from;
-	*from = (*from)->next;
-	free(tmp);
-	ft_putstr(flag);
-	ft_putstr("\n");
+	if (*from != NULL)
+	{
+		prev = (t_stack*)malloc(sizeof(t_stack));
+		prev->data = (*from)->data;
+		prev->next = *target;
+		*target = prev;
+		tmp = *from;
+		*from = (*from)->next;
+		free(tmp);
+	}
+	if (flag == 'a')
+		return (11);
+	return (12);
 }
 
-void	r(t_stack **a, char *flag)
+int		r(t_stack **a, char flag)
 {
 	t_stack	*curr;
 	int		tmp;
 	t_stack	*tmp2;
 
+	if (*a == NULL)
+		return ((flag == 'a') ? 21 : 22);
 	curr = (*a);
 	tmp = curr->data;
 	while (curr->next != NULL)
@@ -64,16 +73,19 @@ void	r(t_stack **a, char *flag)
 		curr = tmp2;
 	}
 	curr->data = tmp;
-	ft_putstr(flag);
-	ft_putstr("\n");
+	if (flag == 'a')
+		return (21);
+	return (22);
 }
 
-void	reverse(t_stack **a, char *flag)
+int		reverse(t_stack **a, char flag)
 {
 	t_stack	*curr;
 	int		tmp;
 	int		tmp2;
 
+	if (*a == NULL)
+		return ((flag == 'a') ? 31 : 32);
 	curr = (*a)->next;
 	tmp = (*a)->data;
 	while (curr != NULL)
@@ -84,18 +96,21 @@ void	reverse(t_stack **a, char *flag)
 		curr = curr->next;
 	}
 	(*a)->data = tmp;
-	ft_putstr(flag);
-	ft_putstr("\n");
+	if (flag == 'a')
+		return (31);
+	return (32);
 }
 
-void	rr(t_stack **a, t_stack **b)
+int		rr(t_stack **a, t_stack **b)
 {
-	r(a, "");
-	r(b, "rr");
+	r(a, 'b');
+	r(b, 'b');
+	return (23);
 }
 
-void	rrr(t_stack **a, t_stack **b)
+int		rrr(t_stack **a, t_stack **b)
 {
-	reverse(a, "");
-	reverse(b, "rrr");
+	reverse(a, 'a');
+	reverse(b, 'b');
+	return (33);
 }

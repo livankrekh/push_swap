@@ -57,9 +57,8 @@ int		is_sorted(t_stack *a)
 {
 	t_stack	*tmp;
 
-	while (a != NULL)
+	while (a->next != NULL)
 	{
-		printf("LOL\n");
 		tmp = a->next;
 		if (a->data > tmp->data)
 			return (0);
@@ -87,6 +86,7 @@ void	print_stack(t_stack *a, t_stack *b)
 		a = a->next;
 	}
 	printf("| a\n");
+	printf("___________________________________________\n");
 	while (b != NULL)
 	{
 		printf("%d -> ", b->data);
