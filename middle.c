@@ -37,7 +37,8 @@ int		get_middle_curr(t_stack *a, int size)
 			arr[i] = tmp;
 			i = 0;
 		}
-		i++;
+		else
+			i++;
 	}
 	res = arr[size / 2];
 	free(arr);
