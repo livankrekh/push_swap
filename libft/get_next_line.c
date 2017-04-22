@@ -23,8 +23,7 @@ static	void		ft_realloc_l(char **s1)
 	free(*s1);
 	*s1 = ft_strnew(i + BUFF_SIZE);
 	ft_strncpy(*s1, fresh, i);
-	if (BUFF_SIZE != 1 && BUFF_SIZE != 2)
-		ft_strdel(&fresh);
+	free(fresh);
 }
 
 static	t_fdlist	*list_control(int fd, t_fdlist *begin)
@@ -37,7 +36,7 @@ static	t_fdlist	*list_control(int fd, t_fdlist *begin)
 		begin = (t_fdlist*)malloc(sizeof(*begin));
 		begin->fd = fd;
 		begin->next = NULL;
-		begin->buf = ft_strnew(0);
+		begin->buf = NULL;
 		return (begin);
 	}
 	current = begin;
@@ -52,11 +51,11 @@ static	t_fdlist	*list_control(int fd, t_fdlist *begin)
 	tmp->next = current;
 	current->next = NULL;
 	current->fd = fd;
-	current->buf = ft_strnew(0);
+	current->buf = NULL;
 	return (current);
 }
 
-static	char		*read_file(int fd, char *buf)
+static	char		*read_file(int fd, char **buf)
 {
 	char	*tmp;
 	int		res;
@@ -68,37 +67,38 @@ static	char		*read_file(int fd, char *buf)
 	while ((res = read(fd, tmp, BUFF_SIZE)) > 0)
 	{
 		tmp[res] = '\0';
-		ft_realloc_l(&buf);
-		ft_strncat(buf, tmp, res);
-		if (ft_strchr(buf, '\n') != NULL)
+		ft_realloc_l(buf);
+		ft_strncat(*buf, tmp, res);
+		if (ft_strchr(*buf, '\n') != NULL)
 			break ;
 		ft_strdel(&tmp);
 		tmp = ft_strnew(BUFF_SIZE);
 	}
 	free(tmp);
-	return (buf);
+	return (*buf);
 }
 
-static	char		*include_line(char *buf, char **line)
+static	char		*include_line(char **buf, char **line)
 {
 	char	*tmp;
 	int		i;
 
 	i = 0;
-	while (buf[i] != '\n' && buf[i] != '\0')
+	while ((*buf)[i] != '\n' && (*buf)[i] != '\0')
 		i++;
-	if (i == 0 && buf[i] == '\0')
+	if (i == 0 && (*buf)[i] == '\0')
 		return (NULL);
-	tmp = ft_strnew(ft_strlen(buf) - i);
+	tmp = ft_strnew(ft_strlen(*buf) - i);
+	if (*line != NULL)
+		free(*line);
 	*line = ft_strnew(i);
-	ft_strncpy(*line, buf, i);
-	ft_strncpy(tmp, &buf[i + 1], ft_strlen(&buf[i + 1]));
-	ft_strclr(buf);
-	ft_strncpy(buf, tmp, ft_strlen(tmp));
-	ft_strclr(tmp);
+	ft_strncpy(*line, *buf, i);
+	ft_strncpy(tmp, &(*buf)[i + 1], ft_strlen(&(*buf)[i + 1]));
+	ft_strclr(*buf);
+	ft_strncpy(*buf, tmp, ft_strlen(tmp));
 	free(tmp);
 	tmp = 0;
-	return (buf);
+	return (*buf);
 }
 
 int					get_next_line(const int fd, char **line)
@@ -113,9 +113,9 @@ int					get_next_line(const int fd, char **line)
 	if (!(begin))
 		begin = list_control(fd, begin);
 	current = list_control(fd, begin);
-	if ((current->buf = read_file(fd, current->buf)) == NULL)
+	if (read_file(fd, &(current->buf)) == NULL)
 		return (0);
-	if ((current->buf = include_line(current->buf, line)) == NULL)
+	if (include_line(&(current->buf), line) == NULL)
 		return (0);
 	return (1);
 }

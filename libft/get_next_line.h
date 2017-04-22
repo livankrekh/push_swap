@@ -12,13 +12,13 @@
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# define BUFF_SIZE 64
+# define BUFF_SIZE 32
 # include <fcntl.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "../libft/libft.h"
+# include "libft.h"
 
 typedef	struct				s_fdlist
 {
