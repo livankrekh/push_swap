@@ -41,6 +41,31 @@ int 	go_cmd(t_stack **a, t_stack **b, char *cmd)
 	return (1);
 }
 
+void	delete_list_a(t_stack **a)
+{
+	t_stack	*next;
+	t_stack	*tmp;
+
+	tmp = *a;
+	while (tmp)
+	{
+		next = tmp->next;
+		free(tmp);
+		tmp = next;
+	}
+	//*a = NULL;
+}
+
+void	print_list(t_stack *cmd)
+{
+	while (cmd != NULL)
+	{
+		ft_putnbr(cmd->data);
+		ft_putstr("\n");
+		cmd = cmd->next;
+	}
+}
+
 int		main(int argc, char **argv)
 {
 	t_stack	*a;
@@ -48,18 +73,28 @@ int		main(int argc, char **argv)
 	char	*cmd;
 
 	b = NULL;
-	cmd = ft_strnew(4);
+	cmd = NULL;
 	a = (t_stack*)malloc(sizeof(t_stack));
 	if (stack_input(a, argv, argc) == 0 || argc < 3)
 		return (-1);
 	while (get_next_line(0, &cmd))
 	{
 		if (go_cmd(&a, &b, cmd) == 0)
+		{
+			delete_list_a(&a);
+			delete_list_a(&b);
+			free(cmd);
 			return (-1);
+		}
+		free(cmd);
+		cmd = NULL;
 	}
 	if (is_sorted(a) && b == NULL)
 		ft_putstr("\033[32mOK\033[0m\n");
 	else
 		ft_putstr("\033[31mKO\033[0m\n");
+	delete_list_a(&a);
+	delete_list_a(&b);
+	while (1);
 	return (0);
 }

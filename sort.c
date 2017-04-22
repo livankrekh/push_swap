@@ -60,7 +60,7 @@ int		check_b(t_stack *b, int size)
 
 	elem2 = NULL;
 	elem3 = NULL;
-	if (size == 1)
+	if (size <= 1)
 		return (0);
 	if (b->next != NULL)
 		elem2 = b->next;
@@ -91,7 +91,7 @@ int		check_a(t_stack *a, int size)
 
 	elem2 = NULL;
 	elem3 = NULL;
-	if (size == 1)
+	if (size <= 1)
 		return (0);
 	if (a->next != NULL)
 		elem2 = a->next;

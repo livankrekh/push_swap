@@ -57,6 +57,8 @@ int		is_sorted(t_stack *a)
 {
 	t_stack	*tmp;
 
+	if (a == NULL)
+		return (0);
 	while (a->next != NULL)
 	{
 		tmp = a->next;

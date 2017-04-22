@@ -17,6 +17,7 @@ int		get_middle_curr(t_stack *a, int size)
 	int		*arr;
 	int		i;
 	int		tmp;
+	int		res;
 
 	i = 0;
 	arr = (int*)malloc(sizeof(int) * size);
@@ -38,6 +39,8 @@ int		get_middle_curr(t_stack *a, int size)
 		}
 		i++;
 	}
-	return (arr[size / 2]);
+	res = arr[size / 2];
+	free(arr);
+	return (res);
 }
 

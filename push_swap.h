@@ -68,5 +68,4 @@ int				count(t_stack *a);
 void			sorting_a(t_stack **a, t_stack **b, t_inf param, t_cmd **cmd);
 int				get_middle_curr(t_stack *a, int size);
 
-
 #endif

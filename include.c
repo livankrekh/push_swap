@@ -12,6 +12,12 @@
 
 #include "push_swap.h"
 
+int 	return_print()
+{
+	ft_putstr("Error\n");
+	return (0);
+}
+
 int		valid(char *n, char **argv, int argc, int index)
 {
 	int			i;
@@ -20,27 +26,16 @@ int		valid(char *n, char **argv, int argc, int index)
 	while (n[i] != '\0')
 	{
 		if (!ft_isdigit(n[i]))
-		{
-			write(1, "Invalid input! Invalid argument - ", 34);
-			ft_putstr(n);
-			return (0);
-		}
+			return (return_print());
 		i++;
 	}
 	if (ft_strlen((n[0] == '-') ? n + 1 : n) >= 10 ||
 		ft_atoi_long(n) > MAX_INT || ft_atoi_long(n) < MIN_INT)
-	{
-		write(1, "Argument larger then MAX_INT! Invalid argument - ", 49);
-		ft_putstr(n);
-		return (0);
-	}
+		return (return_print());
 	while (argc > 0)
 	{
 		if (ft_atoi(n) == ft_atoi(argv[--argc]) && argc != index && argc != 0)
-		{
-			write(1, "Similar arguments!\n", 19);
-			return (0);
-		}
+			return (return_print());
 	}
 	return (1);
 }

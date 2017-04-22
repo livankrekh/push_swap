@@ -163,6 +163,15 @@ void	delete_list_cmd(t_cmd **cmd)
 	*cmd = NULL;
 }
 
+void	print_cmd(t_cmd *cmd)
+{
+	while (cmd != NULL)
+	{
+		ft_putstr(cmd->data);
+		cmd = cmd->next;
+	}
+}
+
 int		main(int argc, char **argv)
 {
 	t_stack		*a;
@@ -181,13 +190,8 @@ int		main(int argc, char **argv)
 	param.pushed = 0;
 	sorting_a(&a, &b, param, &cmd);
 	change_list(&cmd);
-	while (cmd != NULL)
-	{
-		ft_putstr(cmd->data);
-		cmd = cmd->next;
-	}
+	print_cmd(cmd);
 	delete_list_cmd(&cmd);
 	delete_list_a(&a);
-	while (1);
 	return (0);
 }
