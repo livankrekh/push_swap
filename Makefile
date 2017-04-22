@@ -25,12 +25,12 @@ all: $(NAME1) $(NAME2)
 
 $(NAME2): $(LIB) $(SRC:.c=.o) $(MAIN2:.c=.o)
 	@echo ">\033[32mCompiling Checker program\033[0m"
-	@ $(CC) -o $(NAME2) $(LIB) $(SRC:.c=.o) $(MAIN2:.c=.o) $(FLAGS)
+	@ $(CC) -o $(NAME2) $(LIB) $(SRC:.c=.o) $(MAIN2:.c=.o) $(FLAGS) -g
 	@echo ">\033[32mCompiling of Checker finished successfuly!\033[0m\n"
 
 $(NAME1): $(LIB) $(SRC:.c=.o) $(MAIN1:.c=.o)
 	@echo ">\033[32mCompiling executable file\033[0m"
-	@ $(CC) -o $(NAME1) $(LIB) $(SRC:.c=.o) $(MAIN1:.c=.o) $(FLAGS)
+	@ $(CC) -o $(NAME1) $(LIB) $(SRC:.c=.o) $(MAIN1:.c=.o) $(FLAGS) -g
 	@echo ">\033[32mCompiling finished successfuly!\033[0m\n"
 
 $(LIB):

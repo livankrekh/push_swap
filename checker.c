@@ -53,12 +53,12 @@ void	delete_list_a(t_stack **a)
 		free(tmp);
 		tmp = next;
 	}
-	//*a = NULL;
+	*a = NULL;
 }
 
 void	print_list(t_stack *cmd)
 {
-	while (cmd != NULL)
+	while (cmd->next != NULL)
 	{
 		ft_putnbr(cmd->data);
 		ft_putstr("\n");
@@ -75,8 +75,8 @@ int		main(int argc, char **argv)
 	b = NULL;
 	cmd = NULL;
 	a = (t_stack*)malloc(sizeof(t_stack));
-	if (stack_input(a, argv, argc) == 0 || argc < 3)
-		return (-1);
+	if (stack_input(&a, argv, argc) == 0 || argc < 3)
+		return (return_print());
 	while (get_next_line(0, &cmd))
 	{
 		if (go_cmd(&a, &b, cmd) == 0)
@@ -84,7 +84,7 @@ int		main(int argc, char **argv)
 			delete_list_a(&a);
 			delete_list_a(&b);
 			free(cmd);
-			return (-1);
+			return (return_print());
 		}
 		free(cmd);
 		cmd = NULL;
@@ -95,6 +95,5 @@ int		main(int argc, char **argv)
 		ft_putstr("\033[31mKO\033[0m\n");
 	delete_list_a(&a);
 	delete_list_a(&b);
-	while (1);
 	return (0);
 }

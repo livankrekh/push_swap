@@ -23,6 +23,8 @@ int		valid(char *n, char **argv, int argc, int index)
 	int			i;
 
 	i = n[0] == '-' ? 1 : 0;
+	if (ft_strlen(n) == 0)
+		return (0);
 	while (n[i] != '\0')
 	{
 		if (!ft_isdigit(n[i]))
@@ -40,43 +42,15 @@ int		valid(char *n, char **argv, int argc, int index)
 	return (1);
 }
 
-int 	dop(char *arg, t_stack **a)
-{
-	char	**tmp;
-	int 	i;
-	int 	size;
-
-	i = 0;
-	size = 0;
-	tmp = ft_strsplit(arg, ' ');
-	while (tmp[size] != NULL)
-		size++;
-	while (tmp[i] != NULL)
-	{
-		if (valid(tmp[i], tmp, size, i) == 0)
-			return (0);
-		(*a)->data = ft_atoi(tmp[i]);
-		(*a)->next = NULL;
-		i++;
-		if (tmp[i] != NULL)
-		{
-			(*a)->next = (t_stack*)malloc(sizeof(t_stack));
-			(*a) = (*a)->next;
-		}
-	}
-	return (1);
-}
-
-int 	stack_input(t_stack *a, char **argv, int argc)
+int 	stack_input(t_stack **stack, char **argv, int argc)
 {
 	int 		i;
+	t_stack		*a;
 
 	i = 1;
+	a = *stack;
 	if (argc == 2)
-	{
-		if (dop(argv[1], &a) == 0)
 			return (0);
-	}
 	while (i < argc && argc != 2)
 	{
 		if (valid(argv[i], argv, argc, i) == 0)

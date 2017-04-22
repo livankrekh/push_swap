@@ -182,7 +182,7 @@ int		main(int argc, char **argv)
 	b = NULL;
 	cmd = NULL;
 	a = (t_stack*)malloc(sizeof(t_stack));
-	if (stack_input(a, argv, argc) == 0 || argc < 3)
+	if (stack_input(&a, argv, argc) == 0 || argc < 3)
 		return (-1);
 	if (is_sorted(a))
 		return (1);

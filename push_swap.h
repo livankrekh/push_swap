@@ -49,7 +49,7 @@ typedef	struct 	s_stack
 	void		*next;
 }				t_stack;
 
-int 			stack_input(t_stack *a, char **argv, int argc);
+int 			stack_input(t_stack **a, char **argv, int argc);
 int 			s(t_stack *a, char flag);
 int 			ss(t_stack *a, t_stack *b);
 int 			p(t_stack **target, t_stack **from, char flag);
@@ -67,5 +67,6 @@ int				count_balance(t_stack *a, int min, int middle, char flag);
 int				count(t_stack *a);
 void			sorting_a(t_stack **a, t_stack **b, t_inf param, t_cmd **cmd);
 int				get_middle_curr(t_stack *a, int size);
+int 			return_print();
 
 #endif
