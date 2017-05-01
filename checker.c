@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-int 	go_cmd(t_stack **a, t_stack **b, char *cmd)
+int		go_cmd(t_stack **a, t_stack **b, char *cmd)
 {
 	if (!ft_strcmp(cmd, "sa"))
 		SA;
@@ -41,21 +41,6 @@ int 	go_cmd(t_stack **a, t_stack **b, char *cmd)
 	return (1);
 }
 
-void	delete_list_a(t_stack **a)
-{
-	t_stack	*next;
-	t_stack	*tmp;
-
-	tmp = *a;
-	while (tmp)
-	{
-		next = tmp->next;
-		free(tmp);
-		tmp = next;
-	}
-	*a = NULL;
-}
-
 void	print_list(t_stack *cmd)
 {
 	while (cmd->next != NULL)
@@ -76,7 +61,7 @@ int		main(int argc, char **argv)
 	cmd = NULL;
 	a = (t_stack*)malloc(sizeof(t_stack));
 	if (stack_input(&a, argv, argc) == 0 || argc < 3)
-		return (return_print());
+		return (0);
 	while (get_next_line(0, &cmd))
 	{
 		if (go_cmd(&a, &b, cmd) == 0)
@@ -87,12 +72,9 @@ int		main(int argc, char **argv)
 			return (return_print());
 		}
 		free(cmd);
-		cmd = NULL;
 	}
-	if (is_sorted(a) && b == NULL)
-		ft_putstr("\033[32mOK\033[0m\n");
-	else
-		ft_putstr("\033[31mKO\033[0m\n");
+	ft_putstr((is_sorted(a) && b == NULL) ? "\033[32mOK\033[0m\n"
+		: "\033[31mKO\033[0m\n");
 	delete_list_a(&a);
 	delete_list_a(&b);
 	return (0);

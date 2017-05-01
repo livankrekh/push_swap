@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-int 	return_print()
+int		return_print(void)
 {
 	ft_putstr("Error\n");
 	return (0);
@@ -20,7 +20,7 @@ int 	return_print()
 
 int		valid(char *n, char **argv, int argc, int index)
 {
-	int			i;
+	int		i;
 
 	i = n[0] == '-' ? 1 : 0;
 	if (ft_strlen(n) == 0)
@@ -42,15 +42,15 @@ int		valid(char *n, char **argv, int argc, int index)
 	return (1);
 }
 
-int 	stack_input(t_stack **stack, char **argv, int argc)
+int		stack_input(t_stack **stack, char **argv, int argc)
 {
-	int 		i;
+	int			i;
 	t_stack		*a;
 
 	i = 1;
 	a = *stack;
 	if (argc == 2)
-			return (0);
+		return (0);
 	while (i < argc && argc != 2)
 	{
 		if (valid(argv[i], argv, argc, i) == 0)

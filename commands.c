@@ -29,13 +29,6 @@ int		s(t_stack *a, char flag)
 	return (2);
 }
 
-int		ss(t_stack *a, t_stack *b)
-{
-	s(a, 'a');
-	s(b, 'b');
-	return (3);
-}
-
 int		p(t_stack **target, t_stack **from, char flag)
 {
 	t_stack	*prev;
@@ -99,18 +92,4 @@ int		reverse(t_stack **a, char flag)
 	if (flag == 'a')
 		return (31);
 	return (32);
-}
-
-int		rr(t_stack **a, t_stack **b)
-{
-	r(a, 'b');
-	r(b, 'b');
-	return (23);
-}
-
-int		rrr(t_stack **a, t_stack **b)
-{
-	reverse(a, 'a');
-	reverse(b, 'b');
-	return (33);
 }

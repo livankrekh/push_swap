@@ -12,6 +12,21 @@
 
 #include "push_swap.h"
 
+void	delete_list_a(t_stack **a)
+{
+	t_stack	*next;
+	t_stack	*tmp;
+
+	tmp = *a;
+	while (tmp)
+	{
+		next = tmp->next;
+		free(tmp);
+		tmp = next;
+	}
+	*a = NULL;
+}
+
 int		min_a(t_stack *a)
 {
 	int		res;
@@ -67,37 +82,4 @@ int		is_sorted(t_stack *a)
 		a = a->next;
 	}
 	return (1);
-}
-
-void	print_stack(t_stack *a, t_stack *b)
-{
-	int		sign;
-	t_stack	*lol;
-
-	sign = 0;
-	printf("___________________________________________\n");
-	while (a != NULL)
-	{
-		lol = a->next;
-		if (lol != NULL)
-		{
-			if (a->data > lol->data)
-				sign++;
-		}
-		printf("%d -> ", a->data);
-		a = a->next;
-	}
-	printf("| a\n");
-	printf("___________________________________________\n");
-	while (b != NULL)
-	{
-		printf("%d -> ", b->data);
-		b = b->next;
-	}
-	printf("| b\n");
-	if (sign != 0)
-		printf("\033[31mKO\033[0m\n");
-	else
-		printf("\033[32mOK\033[0m\n");
-	printf("SIGN = %d\n", sign);
 }
