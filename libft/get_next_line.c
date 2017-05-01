@@ -89,8 +89,6 @@ static	char		*include_line(char **buf, char **line)
 	if (i == 0 && (*buf)[i] == '\0')
 		return (NULL);
 	tmp = ft_strnew(ft_strlen(*buf) - i);
-	if (*line != NULL)
-		free(*line);
 	*line = ft_strnew(i);
 	ft_strncpy(*line, *buf, i);
 	ft_strncpy(tmp, &(*buf)[i + 1], ft_strlen(&(*buf)[i + 1]));

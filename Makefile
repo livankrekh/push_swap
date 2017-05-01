@@ -12,9 +12,11 @@
 
 NAME1 = push_swap
 NAME2 = checker
-MAIN1 = push_swap.c
-MAIN2 = checker.c
-SRC = commands.c include.c middle.c sort.c dop.c
+MAIN1 = src/push_swap.c
+MAIN2 = src/checker.c
+SRC = src/commands.c src/include.c src/middle.c src/sort.c src/dop.c \
+		src/optimize.c src/optimize2.c src/sort_tools.c src/rrr.c \
+		src/sort_dop.c src/optimize2_dop.c
 CC = gcc
 LIB = libft/libft.a
 FLAGS = -Wall -Wextra -Werror

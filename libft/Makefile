@@ -33,16 +33,16 @@ OBJ = $(SOURCE:.c=.o)
 
 all: $(NAME)
 $(NAME): $(OBJ)
-	ar rc $(NAME) $(OBJ)
-	ranlib $(NAME)
+	@ar rc $(NAME) $(OBJ)
+	@ranlib $(NAME)
 
 %.o: %.c
-	$(CC) $(F) -o $@ -c $<
+	@$(CC) $(F) -o $@ -c $<
 
 clean:
-	rm -f $(OBJ)
+	@rm -f $(OBJ)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all

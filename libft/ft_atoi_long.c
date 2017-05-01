@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-static	long long		conw(long long index, const char *str, long long index_copy)
+static	long long	conw(long long index, const char *str, long long index_copy)
 {
 	long long x;
 	long long sum;
@@ -33,7 +33,7 @@ static	long long		conw(long long index, const char *str, long long index_copy)
 	return (sum);
 }
 
-static	long long		check_array(const char *str)
+static	long long	check_array(const char *str)
 {
 	long long index;
 
@@ -48,7 +48,7 @@ static	long long		check_array(const char *str)
 	return (index);
 }
 
-long long				ft_atoi_long(const char *str)
+long long			ft_atoi_long(const char *str)
 {
 	long long index;
 	long long sum;
