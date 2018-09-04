@@ -18,9 +18,11 @@ This project is about sorting numbers considering two stacks and using only the 
 
 ## Algorithm speed
 
-In theory - in worth cases θ(n x log(n)) - θ(n^2) - for simple quick sort
+#### In theory: 
 
-In reality:
+In worth cases θ(n x log(n)) - θ(n^2) - for simple quick sort
+
+#### In reality:
 
 * For `100 numbers` max - `700 actions`
 * For `500 numbers` max - `5300 actions`
