@@ -16,6 +16,15 @@ This project is about sorting numbers considering two stacks and using only the 
 * `rrb` : reverse rotate b - shift down all elements of stack b by 1. The flast element becomes the first one.
 * `rrr` : rra and rrb at the same time
 
+## Algorithm speed
+
+In theory - in worth cases θ(n x log(n)) - θ(n^2) - for simple quick sort
+
+In reality:
+
+* For `100 numbers` max - `700 actions`
+* For `500 numbers` max - `5300 actions`
+
 ## Compile
 
 `> make all`
