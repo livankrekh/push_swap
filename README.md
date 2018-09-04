@@ -24,8 +24,8 @@ In worth cases θ(n x log(n)) - θ(n^2) - for simple quick sort
 
 ### In reality:
 
-* For `100 numbers` max - `700 actions`
-* For `500 numbers` max - `5300 actions`
+* For `100 numbers` max - `700 instructions`
+* For `500 numbers` max - `5300 instructions`
 
 ## Compile
 
