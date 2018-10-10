@@ -1,6 +1,6 @@
 # Push_swap
 
-This project for sorting numbers using `Quick sort algorithm` ([Wikipedia link](https://en.wikipedia.org/wiki/Quicksort)) for 2 stacks with my own improvements
+This project for sorting numbers using `Quick sort algorithm` ([Wikipedia link](https://en.wikipedia.org/wiki/Quicksort)) for 2 stacks `with my own improvements`
 
 This project is about sorting numbers considering two stacks and using only the following instructions:
 
